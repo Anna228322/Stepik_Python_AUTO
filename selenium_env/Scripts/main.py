@@ -3,36 +3,27 @@ from selenium.webdriver.common.by import By
 import time
 import math
 from selenium.webdriver.support.ui import Select
+import os
 
-link = " http://SunInJuly.github.io/execute_script.html"
-
-def calc(x):
-  return str(math.log(abs(12*math.sin(int(x)))))
+link = " http://suninjuly.github.io/file_input.html"
 
 try:
     browser = webdriver.Chrome()
     browser.get(link)
 
-    browser.execute_script("window.scrollBy(0, 150);")
+    name = browser.find_element(By.CSS_SELECTOR, "[name='firstname']")
+    name.send_keys("a")
+    last_name = browser.find_element(By.CSS_SELECTOR, "[name='lastname']")
+    last_name.send_keys("a")
+    email = browser.find_element(By.CSS_SELECTOR, "[name='email']")
+    email.send_keys("a")
 
-    x = browser.find_element(By.CSS_SELECTOR, "#input_value").text
-    y = calc(x)
-    input = browser.find_element(By.CSS_SELECTOR, "[id='answer']")
-    input.send_keys(y)
-
-    radio = browser.find_element(By.CSS_SELECTOR, "#robotsRule")
-    radio.click()
-    checkbox = browser.find_element(By.CSS_SELECTOR, "#robotCheckbox")
-    checkbox.click()
+    browser.find_element(By.CSS_SELECTOR, "#file").send_keys(os.getcwd() + '/' + 'test.txt')
+    with open("test.txt", "w") as file:
+        content = file.write("automationbypython")
 
     button = browser.find_element(By.XPATH, '//button[text()="Submit"]')
     button.click()
-
-
-
-
-
-
 
 
 finally:
