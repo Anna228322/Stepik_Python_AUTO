@@ -5,7 +5,7 @@ import time
 import math
 from selenium.webdriver.support.ui import Select
 
-link = "http://suninjuly.github.io/alert_accept.html"
+link = "http://suninjuly.github.io/redirect_accept.html"
 
 def calc(x):
   return str(math.log(abs(12*math.sin(int(x)))))
@@ -17,8 +17,9 @@ try:
 
     button = browser.find_element(By.CSS_SELECTOR, ".btn")
     button.click()
-    confirm = browser.switch_to.alert
-    confirm.accept()
+
+    new_window = browser.window_handles[1]
+    browser.switch_to.window(new_window)
 
     x = browser.find_element(By.CSS_SELECTOR, "#input_value").text
     y = calc(x)
