@@ -4,22 +4,36 @@ import time
 import math
 from selenium.webdriver.support.ui import Select
 
-link = "http://suninjuly.github.io/selects1.html"
+link = " http://SunInJuly.github.io/execute_script.html"
+
+def calc(x):
+  return str(math.log(abs(12*math.sin(int(x)))))
 
 try:
     browser = webdriver.Chrome()
     browser.get(link)
 
+    browser.execute_script("window.scrollBy(0, 150);")
 
-    num1 = browser.find_element(By.CSS_SELECTOR, "#num1").text
-    num2 = browser.find_element(By.CSS_SELECTOR, "#num2").text
-    sum = int(num1) + int(num2)
+    x = browser.find_element(By.CSS_SELECTOR, "#input_value").text
+    y = calc(x)
+    input = browser.find_element(By.CSS_SELECTOR, "[id='answer']")
+    input.send_keys(y)
 
-    select = Select(browser.find_element(By.TAG_NAME, "select"))
-    select.select_by_value(str(sum))
+    radio = browser.find_element(By.CSS_SELECTOR, "#robotsRule")
+    radio.click()
+    checkbox = browser.find_element(By.CSS_SELECTOR, "#robotCheckbox")
+    checkbox.click()
 
     button = browser.find_element(By.XPATH, '//button[text()="Submit"]')
     button.click()
+
+
+
+
+
+
+
 
 finally:
     time.sleep(5)
