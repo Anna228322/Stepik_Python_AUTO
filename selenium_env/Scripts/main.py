@@ -1,42 +1,64 @@
 from selenium import webdriver
-from selenium.webdriver.common import alert
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 import time
-import math
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import unittest
 
-link = "http://suninjuly.github.io/explicit_wait2.html"
 
-def calc(x):
-  return str(math.log(abs(12*math.sin(int(x)))))
 
-try:
-    browser = webdriver.Chrome()
-#    browser.implicitly_wait(5)
-    browser.get(link)
+class test_my_first(unittest.TestCase):
 
-    WebDriverWait(browser, 12).until(
-        EC.text_to_be_present_in_element((By.CSS_SELECTOR, "#price"), '100')
-    )
-    button = browser.find_element(By.CSS_SELECTOR, "#book")
-    button.click()
+    def test_registration1(self):
+        link = "http://suninjuly.github.io/registration1.html"
+        browser = webdriver.Chrome()
+        browser.get(link)
 
-    browser.execute_script("window.scrollBy(0, 100);")
+        input1 = browser.find_element(By.XPATH,
+                                      "//label[contains(text(), '*')]//..//input[contains(@class, 'form-control first')]")
+        input1.send_keys("test")
+        input2 = browser.find_element(By.XPATH,
+                                      "//label[contains(text(), '*')]//..//input[contains(@class, 'form-control second')]")
+        input2.send_keys("test")
+        input3 = browser.find_element(By.XPATH,
+                                      "//label[contains(text(), '*')]//..//input[contains(@class, 'form-control third')]")
+        input3.send_keys("test@test.test")
 
-    x = browser.find_element(By.CSS_SELECTOR, "#input_value").text
-    y = calc(x)
-    input = browser.find_element(By.CSS_SELECTOR, "#answer")
-    input.send_keys(y)
 
-    submit = browser.find_element(By.CSS_SELECTOR, "#solve")
-    submit.click()
+        button = browser.find_element(By.CSS_SELECTOR, "button.btn")
+        button.click()
 
-    print(browser.switch_to.alert.text)
+        welcome_text_elt = browser.find_element(By.TAG_NAME, "h1")
+        welcome_text = welcome_text_elt.text
 
-finally:
-    time.sleep(5)
-    browser.quit()
+        self.assertEqual(welcome_text, 'Congratulations! You have successfully registered!', 'not passed')
 
-# не забываем оставить пустую строку в конце файла
+    def test_registration2(self):
+        link = "http://suninjuly.github.io/registration2.html"
+        browser = webdriver.Chrome()
+        browser.get(link)
+
+        input1 = browser.find_element(By.XPATH, "//label[contains(text(), '*')]//..//input[contains(@class, 'form-control first')]")
+        input1.send_keys("test")
+        input2 = browser.find_element(By.XPATH, "//label[contains(text(), '*')]//..//input[contains(@class, 'form-control second')]")
+        input2.send_keys("test")
+        input3 = browser.find_element(By.XPATH, "//label[contains(text(), '*')]//..//input[contains(@class, 'form-control third')]")
+        input3.send_keys("test@test.test")
+
+
+        button = browser.find_element(By.CSS_SELECTOR, "button.btn")
+        button.click()
+
+        welcome_text_elt = browser.find_element(By.TAG_NAME, "h1")
+        welcome_text = welcome_text_elt.text
+
+        self.assertEqual(welcome_text, 'Congratulations! You have successfully registered!', 'not passed')
+
+
+    if __name__ == "__main__":
+        unittest.main()
+
+
+    #с помощью терминала узнаем, какую именно ошибку выводит: (use cmd!!!)((not powershell))
+    # python -m unittest {test}.py
+
+
