@@ -4,7 +4,8 @@ from selenium.webdriver.common.by import By
 
 link = "https://selenium1py.pythonanywhere.com/"
 
-
+#@pytest.mark.skip - пропустить тест
+# @pytest.mark.xfail - отметить тест как падающий
 @pytest.fixture(scope="function")
 def browser():
     print("\nstart browser for test..")
